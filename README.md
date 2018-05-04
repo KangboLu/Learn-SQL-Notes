@@ -182,6 +182,7 @@ INSERT INTO employees(first_name, last_name, age) VALUES
 ```
 
 ## Section 5: CRUD Commands
+### Create
 **CREATE cats table**
 ```sql
 CREATE TABLE cats (
@@ -202,4 +203,44 @@ VALUES ('Ringo', 'Tabby', 4),
        ('Misty', 'Tabby', 13),
        ('George Michael', 'Ragdoll', 9),
        ('Jackson', 'Sphynx', 7);
+```
+
+### Read
+SELECT command: select data from a database.
+1. SELECT all columns
+```sql
+SELECT * FROM tablename;
+```
+
+2. SELECT specified column
+```sql
+SELECT colname FROM tablename;
+```
+
+3. SELECT specified columns
+```sql
+SELECT colname1, colnames2 FROM tablename;
+```
+
+WHERE clause: filter records.
+```sql
+SELECT * FROM tablename WHERE colvalue=1;
+```
+
+Aliases: give a table, or a column in a table, a temporary name.
+```sql
+SELECT user_id AS id, username as name FROM Employees;
+```
+
+### Update
+UPDATE : modify the existing records in a table.
+```sql
+UPDATE tablename SET colvalue=NewValue 
+WHERE colname=specifiedValue;
+```
+
+### Delete
+DELETE: delete existing records in a table.
+```sql
+DELETE FROM tablename WHERE condition=TRUE;
 ```
