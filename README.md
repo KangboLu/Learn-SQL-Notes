@@ -338,7 +338,7 @@ WHERE colname LIKE 'a%'; -- starts with a
 WHERE colname LIKE '_a%'; -- second letter with a 
 ```
 
-**5. Wildcard**
+**5. Wildcard: substitute any other character(s) in a string.**
 ```sql
 WHERE colname LIKE '%\%%'; -- match a percent sign
 
