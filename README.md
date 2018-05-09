@@ -640,14 +640,13 @@ FROM tablename
 WHERE colanme1 % 2 != 1; -- odd numbers
 ```
 
-**7. CASE**
-Example of apply conditions
+**7. CASE: return bases on condition**
 ```sql
-SELECT title, stock_quantity,
+SELECT colname
   CASE 
-    WHEN stock_quantity <= 50 THEN '*'
-    WHEN stock_quantity <= 100 THEN '**'
-    ELSE '***'
-  END AS STOCK
-FROM books; 
+    WHEN colname = 1 THEN 'one'
+    WHEN colname = 2 THEN 'two'
+    ELSE 'many'
+  END AS COUNTING
+FROM tablename; 
 ```
