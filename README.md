@@ -464,6 +464,17 @@ SELECT
 FROM baby;
 ```
 
+Example of casting datetime:
+```sql
+SELECT 
+  name, 
+  birth_datetime 
+FROM people
+WHERE 
+  birth_datetime BETWEEN CAST('1980-01-01' AS DATETIME)
+  AND CAST('2000-01-01' AS DATETIME);
+```
+
 **9. DATEDIFF: difference between 2 dates**
 ```sql
 SELECT 
@@ -514,4 +525,129 @@ INSERT INTO comments (content) VALUES('1'); -- the current time is stored
 UPDATE comments2 
 SET content='new content' 
 WHERE content='1'; -- the created_at is updated with the current timestamp
+```
+
+## Section 8: Logical Operators
+**1. Not equal**
+```sql
+SELECT colname FROM table
+WHERE colname != someValue; 
+```
+
+**2. LIKE and NOT LIKE**
+```sql
+SELECT colname FROM table
+WHERE colname LIKE someValue;
+
+SELECT colname FROM table
+WHERE colname NOT LIKE someValue; 
+```
+
+**3. < = > <= >=**
+```sql
+SELECT colname FROM table
+WHERE colname < someValue;
+
+SELECT colname FROM table
+WHERE colname = someValue;
+
+SELECT colname FROM table
+WHERE colname > someValue; 
+
+SELECT colname FROM table
+WHERE colname <= someValue; 
+
+SELECT colname FROM table
+WHERE colname >= someValue; 
+
+SELECT 1 > 0; -- return 1
+SELECT 1 < 0; -- return 0
+SELECT 'a' > 'b'; -- return 0
+SELECT 'a' < 'b'; -- return 1
+SELECT 'A' > 'a'; -- return 0
+SELECT 'A' = 'a'; -- return 1
+SELECT 'A' >= 'a'; -- return 1
+```
+
+**4. AND &&: 2 or more need to be true**
+```sql
+SELECT colname1,
+       colname2
+FROM tablename
+WHERE colanme1 = value1 AND 
+      colname2 = value2;
+
+SELECT colname1,
+       colname2
+FROM tablename
+WHERE colanme1 = value1 && 
+      colname2 = value2;
+
+SELECT 1=1 AND 1!=1; -- return 0
+SELECT 1=1 AND 1>=1; -- return 1
+```
+
+**4. OR ||: either side is true**
+```sql
+SELECT colname1,
+       colname2
+FROM tablename
+WHERE colanme1 = value1 OR 
+      colname2 = value2;
+
+SELECT colname1,
+       colname2
+FROM tablename
+WHERE colanme1 = value1 || 
+      colname2 = value2;
+
+SELECT 1=1 || 1!=1; -- return 1
+SELECT 1!=1 OR 1>1; -- return 0
+```
+
+**5. BETWEEN and NOT BETWEEN**
+```sql
+SELECT colname1,
+       colname2
+FROM tablename
+WHERE colanme1 
+BETWEEN value1 AND value2;
+
+SELECT colname1,
+       colname2
+FROM tablename
+NOT WHERE colanme1 
+BETWEEN value1 AND value2;
+```
+
+**6. IN and NOT IN**
+```sql
+SELECT colname1,
+       colname2
+FROM tablename
+WHERE colanme1 
+NOT IN (1,2,3,4,5);
+
+SELECT colname1,
+       colname2
+FROM tablename
+WHERE colanme1 
+IN (1,2,3,4,5);
+
+SELECT colname1,
+       colname2
+FROM tablename
+WHERE colanme1 % 2 != 1; -- odd numbers
+```
+
+**7. CASE**
+Example of apply conditions
+```sql
+SELECT title, stock_quantity,
+  CASE 
+    WHEN stock_quantity <= 50 THEN '*'
+    WHEN stock_quantity <= 100 THEN '**'
+    ELSE '***'
+  END AS STOCK
+FROM books; 
 ```
