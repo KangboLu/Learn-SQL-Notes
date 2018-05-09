@@ -1,49 +1,18 @@
 # SQL-Markdown-Notes
 
-## Section 1: Introduction and 5 Minutes of SQL
-
-**Step 1.**
-```sql
-SELECT * FROM customers;
-```
-
-**Step 2.**  
-```sql
-SELECT * FROM orders;
-```
-
-**Step 3.**  
-
-```sql
-SELECT *
-FROM products
-ORDER BY Price DESC;
-```
-
-
-**Step 4.**
-```sql
-SELECT 
-customerName,
-COUNT(*) AS 'number of orders'
-FROM customers
-INNER JOIN orders
-ON orders.customerID = customers.customerID
-GROUP BY customers.customerID;
-```
-
-## Section 3: Creating databases and tables
-
-**Create databases:**
-1. start the CLI:
+1. start the mysql CLI:
 `mysql-ctl cli;`
 2. List databases:
 `show databases;`
-3. Create databases:
-`CREATE DATABASES database_name;`
+
+## Section 1: Creating databases and tables
+
+**Create databases:**
+```sql
+CREATE DATABASES database_name;
+```
 
 **Drop databases:**
-Drop a databases:
 ```sql
 DROP DATABASE database_name;
 ```
@@ -52,6 +21,7 @@ DROP DATABASE database_name;
 ```sql
 USE database_name;
 ```
+
 See the current selected database:
 ```sql
 SELECT database();
@@ -72,17 +42,15 @@ col_name data_type
 );
 ```
 
-Example of cats table:
+Example of create table:
 ```sql
-CREATE TABLE cats
-(
-name VARCHAR(100),
-age INT
+CREATE TABLE cats (
+  name VARCHAR(100),
+  age INT
 );
 ```
 
 **Checking tables:**
-
 ```sql
 SHOW TABLES;
 SHOW COLUMNS FROM table_name;
@@ -94,7 +62,7 @@ DESC table_name;
 DROP TABLE table_name;
 ```
 
-## Section 4: Inserting Data
+## Section 2: Inserting Data
 **Insert data**
 Generic:
 ```sql
@@ -181,7 +149,7 @@ INSERT INTO employees(first_name, last_name, age) VALUES
 ('Dora', 'Smith', 58);
 ```
 
-## Section 5: CRUD Commands
+## Section 3: CRUD Commands
 ### Create
 **CREATE cats table**
 ```sql
@@ -245,7 +213,7 @@ WHERE colname=specifiedValue;
 DELETE FROM tablename WHERE condition=TRUE;
 ```
 
-## Section 6: String functions
+## Section 4: String functions
 **1. SOURCE: load sql file**
 ```sql
 SOURCE filename.sql
@@ -300,7 +268,7 @@ SELECT LOWER('123');
 SELECT LOWER('string') FROM tablename;
 ```
 
-## Section 7: Refining SELECTion
+## Section 5: Refining SELECTion
 **1. DISTINCT: find the distinct row of a column**
 ```sql
 SELECT DISTINCT colname FROM tablename;
@@ -350,7 +318,7 @@ WHERE colname LIKE '[a-z]%'; -- match letter starts from a to z
 
 WHERE colname LIKE '[abc]%'; -- match staring starts with letter a or b or c
 ```
-## Section 8: Aggregate Functions
+## Section 6: Aggregate Functions
 
 **1. COUNT: count number of rows**
 ```sql
@@ -399,7 +367,7 @@ FROM tablename
 GROUP BY colname2;
 ```
 
-## Section 9: Data Types
+## Section 7: Data Types
 **1. Difference between VARCHAR nad CHAR**
 1. VARCHAR: has variable size according to the value
 2. CHAR: has fixed size. Faster for fixed length text
