@@ -650,3 +650,7 @@ SELECT colname
   END AS COUNTING
 FROM tablename; 
 ```
+
+## Section 9: One to Many
+**1. Definition of 1 to many**
+The One-to-Many relationship is defined as a relationship between two tables where a row from one table can have multiple matching rows in another table.
