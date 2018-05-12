@@ -736,7 +736,7 @@ INNER JOIN orders,
 
 ![Left Venne Diagram](left_join.gif)
 
-4. Left Join:
+4. LEFT JOIN:
 returns all records from the left table (table1), and the matched records from the right table (table2). The result is NULL from the right side, if there is no match.
 
 ```sql
@@ -760,7 +760,7 @@ ORDER BY total_spent;
 
 ![Right Venne Diagram](right_join.gif)
 
-5. Right Join:
+5. RIGHT JOIN:
 returns all records from the right table (table2), and the matched records from the left table (table1). The result is NULL from the left side, when there is no match.
 
 ```sql
