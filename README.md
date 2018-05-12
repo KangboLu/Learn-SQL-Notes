@@ -654,3 +654,66 @@ FROM tablename;
 ## Section 9: One to Many
 **1. Definition of 1 to many**
 The One-to-Many relationship is defined as a relationship between two tables where a row from one table can have multiple matching rows in another table.
+
+**2. PRIMARY KEY and FOREIGN KEY**
+1. PRIMARY KEY: 
+It identifies each record in a database table with UNIQUE values, and cannot contain NULL values. A table can have only one primary key, which may consist of single or multiple fields.
+
+2. FOREIGN KEY: 
+It is a key used to link two tables together. It is a field (or collection of fields) in one table that refers to the PRIMARY KEY in another table. The table containing the foreign key is called the child table, and the table containing the candidate key is called the referenced or parent table.
+
+3. Example use of FOREIGN KEY and PRIMARY KEY:
+```sql
+-- Create customers and orders tables
+CREATE TABLE customers (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  first_name VARCHAR(100),
+  last_name VARCHAR(100),
+  email VARCHAR(100)
+);
+CREATE TABLE orders (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  order_date DATE,
+  amount DECIMAL(8,2),
+  customer_id INT,
+  FOREIGN KEY(customer_id) REFERENCES customers(id)
+);
+
+-- insert data into customers and orders tables
+INSERT INTO customers (first_name, last_name, email) 
+VALUES ('Boy', 'George', 'george@gmail.com'),
+       ('George', 'Michael', 'gm@gmail.com'),
+       ('David', 'Bowie', 'david@gmail.com'),
+       ('Blue', 'Steele', 'blue@gmail.com'),
+       ('Bette', 'Davis', 'bette@aol.com');
+       
+INSERT INTO orders (order_date, amount, customer_id)
+VALUES ('2016/02/10', 99.99, 1),
+       ('2017/11/11', 35.50, 1),
+       ('2014/12/12', 800.67, 2),
+       ('2015/01/03', 12.50, 2),
+       ('1999/04/11', 450.25, 5);
+
+-- test the foreign key constraint
+INSERT INTO orders (order_date, amount, customer_id)
+VALUES ('2016/06/06', 33.67, 98);
+
+-- find orders placed by George
+SELECT id FROM customers WHERE last_name='George';
+SELECT * FROM orders WHERE customer_id = 1;
+
+-- or 
+SELECT * FROM orders 
+WHERE customer_id = (
+  SELECT id FROM customers
+  WHERE last_name='George'
+);
+```
+
+**3. JOIN**
+1. Cross Join:
+Cross join produces a result set which is the number of rows in the first table multiplied by the number of rows in the second table if no WHERE clause is used along with CROSS JOIN.This kind of result is called as Cartesian Product.
+```sql
+SELECT * FROM customers, orders;
+```
+
