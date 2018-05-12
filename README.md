@@ -22,7 +22,7 @@ DROP DATABASE database_name;
 USE database_name;
 ```
 
-See the current selected database:
+**See the current selected database:**
 ```sql
 SELECT database();
 ```
@@ -717,3 +717,19 @@ Cross join produces a result set which is the number of rows in the first table 
 SELECT * FROM customers, orders;
 ```
 
+![Inner Join Venne Diagram](inner_join.gif)
+
+2. Implicit Inner Join:
+Selects records that have matching values in both tables.
+```sql
+SELECT first_name, last_name, order_date, amount FROM customers, orders 
+WHERE customers.id = orders.customer_id;
+```
+
+2. Explicit Inner Join (recommended):
+Selects records that have matching values in both tables.
+```sql
+SELECT first_name, last_name, order_date, amount FROM customers 
+JOIN orders,
+  ON customers.id = orders.customer_id;
+```
