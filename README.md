@@ -726,10 +726,33 @@ SELECT first_name, last_name, order_date, amount FROM customers, orders
 WHERE customers.id = orders.customer_id;
 ```
 
-2. Explicit Inner Join (recommended):
+3. Explicit Inner Join (recommended):
 Selects records that have matching values in both tables.
 ```sql
 SELECT first_name, last_name, order_date, amount FROM customers 
-JOIN orders,
+INNER JOIN orders,
   ON customers.id = orders.customer_id;
+```
+
+![Left Venne Diagram](left_join.gif)
+
+4. Left Join:
+returns all records from the left table (table1), and the matched records from the right table (table2). The result is NULL from the right side, if there is no match.
+```sql
+-- left join customers with their orders
+SELECT first_name, last_name, order_date, amount
+FROM customers
+LEFT JOIN orders
+  ON customers.id = orders.customer_id; 
+
+-- group by customer_id and left join customer spending to see the order of total spending
+SELECT 
+  first_name, 
+  last_name,
+  IFNULL(SUM(amount), 0) AS total_spent -- if amount is NULL, change it to 0
+FROM customers
+LEFT JOIN orders
+  ON customers.id = orders.customer_id
+GROUP BY customers.id
+ORDER BY total_spent;
 ```
