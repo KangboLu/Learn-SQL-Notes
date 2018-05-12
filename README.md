@@ -710,7 +710,7 @@ WHERE customer_id = (
 );
 ```
 
-**3. JOIN**
+**3. JOINs**
 1. Cross Join:
 Cross join produces a result set which is the number of rows in the first table multiplied by the number of rows in the second table if no WHERE clause is used along with CROSS JOIN.This kind of result is called as Cartesian Product.
 ```sql
@@ -738,6 +738,7 @@ INNER JOIN orders,
 
 4. Left Join:
 returns all records from the left table (table1), and the matched records from the right table (table2). The result is NULL from the right side, if there is no match.
+
 ```sql
 -- left join customers with their orders
 SELECT first_name, last_name, order_date, amount
@@ -755,4 +756,15 @@ LEFT JOIN orders
   ON customers.id = orders.customer_id
 GROUP BY customers.id
 ORDER BY total_spent;
+```
+
+![Right Venne Diagram](right_join.gif)
+
+5. Right Join:
+returns all records from the right table (table2), and the matched records from the left table (table1). The result is NULL from the left side, when there is no match.
+
+```sql
+SELECT * FROM customers
+RIGHT JOIN orders
+  ON customers.id = orders.customer_id;
 ```
