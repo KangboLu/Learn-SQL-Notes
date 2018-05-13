@@ -775,7 +775,7 @@ RIGHT JOIN orders
 
 **2. Example of Many to Many**
 ```sql
--- create tables for movie review database
+-- create tables for tv review database
 CREATE TABLE reviewers (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	first_name VARCHAR(100),
@@ -840,4 +840,89 @@ VALUES
   (10,5,9.9),
   (13,3,8.0),(13,4,7.2),
   (14,2,8.5),(14,3,8.9),(14,4,8.9);
+
+-- INNER JOIN tables
+-- find rating of tv series
+SELECT 
+  title, 
+  rating 
+FROM series
+JOIN reviews
+  ON series.id = reviews.series_id;
+
+-- find average rating of tv series
+SELECT 
+  title, 
+  AVG(rating) AS avg_rating
+FROM series
+JOIN reviews
+  ON series.id = reviews.series_id
+GROUP BY series.id
+ORDER BY avg_rating;
+
+-- find reviewers' reviews
+SELECT
+  first_name,
+  last_name,
+  rating
+FROM reviewers
+INNER JOIN reviews
+  ON reviewers.id = reviews.reviewer_id;
+
+-- find unreviewed series
+SELECT title AS unreviewed_series
+FROM series
+LEFT JOIN reviews
+  ON series.id = reviews.series_id
+WHERE rating IS NULL;
+
+-- find average genre rating
+SELECT genre, 
+  ROUND(AVG(rating), 2) AS avg_rating 
+FROM series 
+INNER JOIN reviews 
+  ON series.id = reviews.series_id 
+GROUP BY genre; 
+
+-- find reviwers' status: name, rating, status
+SELECT first_name, 
+  last_name, 
+  COUNT(rating) AS COUNT, 
+  Ifnull(MIN(rating), 0) AS MIN, 
+  Ifnull(MAX(rating), 0) AS MAX, 
+  RounROUNDd(Ifnull(AVG(rating), 0), 2) AS AVG, 
+  IF(Count(rating) > 0, 'ACTIVE', 'INACTIVE') AS STATUS 
+FROM reviewers 
+LEFT JOIN reviews 
+  ON reviewers.id = reviews.reviewer_id 
+GROUP BY reviewers.id; 
+
+-- find power users' status
+SELECT first_name, 
+  last_name, 
+  COUNT(rating) AS COUNT, 
+  Ifnull(MIN(rating), 0) AS MIN, 
+  Ifnull(MAX(rating), 0) AS MAX, 
+  ROUND(Ifnull(AVG(rating), 0), 2) AS AVG, 
+  CASE 
+    WHEN COUNT(rating) >= 10 THEN 'POWER USER' 
+    WHEN COUNT(rating) > 0 THEN 'ACTIVE' 
+    ELSE 'INACTIVE' 
+  END AS STATUS 
+FROM reviewers 
+LEFT JOIN reviews 
+  ON reviewers.id = reviews.reviewer_id 
+GROUP BY reviewers.id; 
+
+-- join 3 tables together to show the data
+SELECT 
+  title,
+  rating,
+  CONCAT(first_name,' ', last_name) AS reviewer
+FROM reviewers
+INNER JOIN reviews 
+  ON reviewers.id = reviews.reviewer_id
+INNER JOIN series
+  ON series.id = reviews.series_id
+ORDER BY title;
 ```
