@@ -1093,6 +1093,133 @@ FROM users
 INNER JOIN likes 
   ON users.id = likes.user_id 
 GROUP BY likes.user_id 
-HAVING num_likes = (SELECT Count(*) 
+HAVING num_likes = (SELECT COUNT(*) 
   FROM photos); 
+```
+
+## Section 13: NodeJS with MySQL
+**1. Install MySQL Node Package**
+`npm install mysql`
+
+**2. Connect to Database**
+```javascript
+var mysql = require('mysql');
+
+// establish a connection with database
+var connection = mysql.createConnection({
+  host : 'localhost',
+  user : 'database user name here',
+  database : 'database name here'
+});
+```
+
+**3. Run Queries**
+```javascript
+connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
+   if (error) throw error;
+   console.log('The solution is: ', results[0].solution);
+});
+
+var q = 'SELECT CURTIME() as time, CURDATE() as date, NOW() as now';
+connection.query(q, function (error, results, fields) {
+  if (error) throw error;
+  console.log(results[0].time);
+  console.log(results[0].date);
+  console.log(results[0].now);
+});
+```
+
+**4. Create an users table for NodeJS**
+```sql
+CREATE TABLE users (
+  email VARCHAR(255) PRIMARY KEY,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+```
+
+**5. Insert users (from mysql command line)**
+```sql
+INSERT INTO users (email) VALUES('Katie34@yahoo.com'), ('Tunde@gmail.com');
+```
+
+**6. SELECT Users from database through NodeJS**
+```javascript
+// select all users
+var q = 'SELECT * FROM users ';
+connection.query(q, function (error, results, fields) {
+  if (error) throw error;
+  console.log(results);
+});
+
+// count total users
+var q = 'SELECT COUNT(*) AS total FROM users ';
+connection.query(q, function (error, results, fields) {
+  if (error) throw error;
+  console.log(results[0].total);
+});
+```
+
+**7. INSERT users to database though NodeJS**
+```javascript
+// used faker npm package for generating fake user info
+var person = {
+    email: faker.internet.email(),
+    created_at: faker.date.past()
+};
+ 
+var end_result = connection.query('INSERT INTO users SET ?', person, function(err, result) {
+  if (err) throw err;
+  console.log(result);
+});
+
+// insert 500 faker users into database
+var data = [];
+for(var i = 0; i < 500; i++){
+  data.push([
+    faker.internet.email(),
+    faker.date.past()
+  ]);
+}
+ 
+var q = 'INSERT INTO users (email, created_at) VALUES ?';
+ 
+connection.query(q, [data], function(err, result) {
+  console.log(err);
+  console.log(result);
+});
+ 
+connection.end();
+```
+
+**8. Solving problem with MySQL**
+```sql
+-- find earliest user
+SELECT 
+  DATE_FORMAT(MIN(created_at), "%M %D %Y") as earliest_date 
+FROM users;
+
+-- find earliest user's email
+SELECT * 
+FROM users 
+WHERE created_at = (SELECT Min(created_at) FROM users); 
+
+-- find popular registration month
+SELECT Monthname(created_at) AS month, 
+       COUNT(*) AS count 
+FROM users 
+GROUP BY month 
+ORDER BY count DESC;
+
+-- count users' registraion email host
+SELECT 
+  CASE 
+    WHEN email LIKE '%@gmail.com' THEN 'gmail' 
+    WHEN email LIKE '%@yahoo.com' THEN 'yahoo' 
+    WHEN email LIKE '%@hotmail.com' THEN 'hotmail' 
+    ELSE 'other' 
+  END AS provider, 
+  COUNT(*) AS total_users 
+FROM users 
+GROUP BY provider 
+ORDER BY total_users DESC; 
 ```
