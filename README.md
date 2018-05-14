@@ -1007,3 +1007,92 @@ CREATE TABLE photo_tags (
   PRIMARY KEY(photo_id, tag_id)
 );
 ```
+
+## Section 12: Working with instagram data
+**1. Load the data**
+see the ig_clone_data.sql file and load it
+```sql
+source ig_clone_data.sql
+```
+
+**2. Playing with data**
+1. Find the top 5 longest user
+```sql
+SELECT
+  username, 
+  created_at
+FROM users
+ORDER BY created_at
+LIMIT 5;
+```
+
+2. Find the top 3 most popular registration day of a week
+```sql
+SELECT
+  username, 
+  DAYNAME(created_at) AS day,
+  COUNT(*) AS total
+FROM users
+GROUP BY day
+ORDER BY total DESC
+LIMIT 3;
+```
+
+3. Find the inactive users who have never post a photo on instagram
+```sql
+SELECT username
+FROM users
+LEFT JOIN photos
+  ON users.id = photos.user_id
+WHERE photos.id IS NULL;
+```
+
+4. Find the most liked photo user
+```sql
+SELECT 
+  username,
+  photos.id,
+  photos.image_url, 
+  COUNT(*) AS total
+FROM photos
+INNER JOIN likes
+  ON likes.photo_id = photos.id
+INNER JOIN users
+  ON photos.user_id = users.id
+GROUP BY photos.id
+ORDER BY total DESC
+LIMIT 1;
+```
+
+5. Find the average posts a user make
+total photos / total users
+```sql
+SELECT 
+  (SELECT COUNT(*) FROM photos) /
+  (SELECT COUNT(*) FROM users) 
+  AS avg_post;
+```
+
+6. Find the top 5 popular hashtag
+```sql
+SELECT tags.tag_name AS tag, 
+  Count(*) AS total 
+FROM photo_tags 
+JOIN tags 
+  ON photo_tags.tag_id = tags.id 
+GROUP BY tags.id 
+ORDER BY total DESC 
+LIMIT 5; 
+```
+
+7. Find users who have liked every single photo on a site
+```sql
+SELECT username, 
+  Count(*) AS num_likes 
+FROM   users 
+INNER JOIN likes 
+  ON users.id = likes.user_id 
+GROUP BY likes.user_id 
+HAVING num_likes = (SELECT Count(*) 
+  FROM photos); 
+```
