@@ -926,3 +926,84 @@ INNER JOIN series
   ON series.id = reviews.series_id
 ORDER BY title;
 ```
+
+## Section 11: Design Instagram Database Clone
+**1. Things to consider**
+1. Photos
+2. Users
+3. Likes
+4. Hashtags
+5. Comments
+6. Followers
+7. Followees
+etc ...
+
+**2. Implement the instagram clone**
+```sql
+-- create the database
+CREATE DATABASE ig_clone;
+USE ig_clone;
+
+-- user table
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(255) UNIQUE NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- photos table
+CREATE TABLE photos (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  image_url VARCHAR(255) NOT NULL,
+  user_id INT NOT NULL, -- point to users table
+  created_at TIMESTAMP DEFAULT NOW(),
+  FOREIGN KEY(user_id) REFERENCES users(id)
+);
+
+-- comments table
+CREATE TABLE comments (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  comment_text VARCHAR(255) NOT NULL,
+  user_id INT NOT NULL, -- point to users table
+  photo_id INT NOT NULL, -- point to photos table
+  created_at TIMESTAMP DEFAULT NOW(),
+  FOREIGN KEY(user_id) REFERENCES users(id),
+  FOREIGN KEY(photo_id) REFERENCES photos(id)
+);
+
+-- likes table
+CREATE TABLE likes (
+  user_id INT NOT NULL,
+  photo_id INT NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW(),
+  FOREIGN KEY(user_id) REFERENCES users(id),
+  FOREIGN KEY(photo_id) REFERENCES photos(id),
+  PRIMARY KEY(user_id, photo_id) -- prevent duplications
+);
+
+-- follows table
+CREATE TABLE follows (
+  follower_id INT NOT NULL,
+  followee_id INT NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW(),
+  FOREIGN KEY(follower_id) REFERENCES users(id),
+  FOREIGN KEY(followee_id) REFERENCES users(id),
+  PRIMARY KEY(follower_id, followee_id) -- prevent duplications
+);
+
+-- tags table
+CREATE TABLE tags (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  tag_name VARCHAR(255) UNIQUE,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- photo_tags table
+CREATE TABLE photo_tags (
+  photo_id INT NOT NULL,
+  tag_id INT NOT NULL,
+  FOREIGN KEY(photo_id) REFERENCES photos(id),
+  FOREIGN KEY(tag_id) REFERENCES tags(id),
+  PRIMARY KEY(photo_id, tag_id)
+);
+```
