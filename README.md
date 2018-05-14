@@ -1016,7 +1016,7 @@ source ig_clone_data.sql
 ```
 
 **2. Playing with data**
-1. Find the top 5 longest user
+1. Find the top 5 oldest users
 ```sql
 SELECT
   username, 
