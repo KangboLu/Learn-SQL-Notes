@@ -1076,7 +1076,7 @@ SELECT
 6. Find the top 5 popular hashtag
 ```sql
 SELECT tags.tag_name AS tag, 
-  Count(*) AS total 
+  COUNT(*) AS total 
 FROM photo_tags 
 JOIN tags 
   ON photo_tags.tag_id = tags.id 
@@ -1088,8 +1088,8 @@ LIMIT 5;
 7. Find users who have liked every single photo on a site
 ```sql
 SELECT username, 
-  Count(*) AS num_likes 
-FROM   users 
+  COUNT(*) AS num_likes 
+FROM users 
 INNER JOIN likes 
   ON users.id = likes.user_id 
 GROUP BY likes.user_id 
