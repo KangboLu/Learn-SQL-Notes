@@ -1226,3 +1226,18 @@ ORDER BY total_users DESC;
 
 ## Section 14: NodeJS with MySQL Project JOIN US
 See folder "NodeJS with MySQL Project"
+**1. Create a join_us databse**
+```sql
+CREATE DATABASE join_us;
+```
+**2. Create table users like the above section and insert data"**
+
+**3. Using express to build a simple website with RESTful API**
+1. GET route: /
+2. POST route: /register
+
+**4. Create CSS rules to beautify website**
+
+**Final screenshot**
+![Website Screenshot](screenshot.PNG)
+
