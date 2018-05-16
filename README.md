@@ -1225,7 +1225,7 @@ ORDER BY total_users DESC;
 ```
 
 ## Section 14: NodeJS with MySQL Project JOIN US
-**See folder "NodeJS with MySQL Project"**
+**See folder "![NodeJS with MySQL Project](https://github.com/KangboLu/SQL-Markdown-Notes/tree/master/NodeJS%20with%20MySQL%20Project)"**
 
 **1. Create a join_us databse**
 ```sql
