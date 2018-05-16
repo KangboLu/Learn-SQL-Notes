@@ -1225,7 +1225,8 @@ ORDER BY total_users DESC;
 ```
 
 ## Section 14: NodeJS with MySQL Project JOIN US
-See folder "NodeJS with MySQL Project"
+**See folder "NodeJS with MySQL Project"**
+
 **1. Create a join_us databse**
 ```sql
 CREATE DATABASE join_us;
