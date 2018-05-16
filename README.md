@@ -1223,3 +1223,6 @@ FROM users
 GROUP BY provider 
 ORDER BY total_users DESC; 
 ```
+
+## Section 14: NodeJS with MySQL Project JOIN US
+See folder "NodeJS with MySQL Project"
