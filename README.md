@@ -1,5 +1,13 @@
 # SQL-Markdown-Notes
 
+## Section 14 (Scroll Down): NodeJS with MySQL Project JOIN US
+**See folder "[NodeJS with MySQL Project](https://github.com/KangboLu/SQL-Markdown-Notes/tree/master/NodeJS%20with%20MySQL%20Project)"**
+
+**Final screenshot**
+![Website Screenshot](screenshot.PNG)
+
+
+## Section 0: Starting MySQL
 1. start the mysql CLI:
 `mysql-ctl cli;`
 2. List databases:
