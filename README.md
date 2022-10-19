@@ -483,7 +483,7 @@ WHERE
   AND CAST('2000-01-01' AS DATETIME);
 ```
 
-**9. DATEDIFF: difference between 2 dates**
+**9. [DATEDIFF](https://www.scaler.com/topics/datediff-in-sql-server/): difference between 2 dates**
 ```sql
 SELECT 
   DATEDIFF(NOW(), birthdate)
