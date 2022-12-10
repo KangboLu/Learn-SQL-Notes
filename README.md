@@ -43,7 +43,7 @@ INT
 
 **Create my own table:**
 ```sql
-CREAT TABLE table_name
+CREATE TABLE table_name
 (
 col_name data_type,
 col_name data_type
